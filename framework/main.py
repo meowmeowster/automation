@@ -26,3 +26,8 @@ driver = webdriver.Remote(
 def unix():
     return sys.platform.startswith('linux') or sys.platform.startswith('darwin')
 
+
+class Steps(unittest.TestCase):
+    def is_unix(self):
+        return unix()
+
