@@ -18,9 +18,11 @@ capabilities = {
     "enableVNC": True,
     "enableVideo": False
 }
-driver = webdriver.Remote(
-    command_executor="http://127.0.0.1:4444/wd/hub",
-    desired_capabilities=capabilities)
+#driver = webdriver.Remote(
+#    command_executor="http://127.0.0.1:4444/wd/hub",
+#    desired_capabilities=capabilities)
+
+driver = webdriver.Chrome(ChromeDriverManager().install())
 
 
 def unix():
@@ -29,5 +31,7 @@ def unix():
 
 class Steps(unittest.TestCase):
     def is_unix(self):
+        driver.close()
         return unix()
+
 
