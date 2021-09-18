@@ -15,7 +15,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options as OptionsChrome
 from selenium.webdriver.firefox.options import Options as OptionsFirefox
 
-browser = open("../browser.txt").read()
+browser = open(os.getcwd()+"/browser.txt").read()
 
 if browser == "Chrome":
     options = OptionsChrome()
