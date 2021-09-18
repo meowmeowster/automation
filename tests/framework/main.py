@@ -15,7 +15,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options as OptionsChrome
 from selenium.webdriver.firefox.options import Options as OptionsFirefox
 
-browser = "Firefox"
+browser = open("../browser.txt").read()
 
 if browser == "Chrome":
     options = OptionsChrome()
@@ -25,7 +25,10 @@ elif browser == "Firefox":
     options = OptionsFirefox()
     options.add_argument("--headless")
     driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), firefox_options=options)
-
+else:
+    options = OptionsChrome()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
 
 def unix():
