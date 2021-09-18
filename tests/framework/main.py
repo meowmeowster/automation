@@ -11,29 +11,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.chrome.options import Options
 
-capabilities = {
-    "browserName": "chrome",
-    "version": "85.0",
-    "enableVNC": True,
-    "enableVideo": False
-}
-#driver = webdriver.Remote(
-#    command_executor="http://127.0.0.1:4444/wd/hub",
-#    desired_capabilities=capabilities)
+options = Options()
+#options.add_argument("--headless")
+options.headless = True
 
-chrome_options = Options()
-#chrome_options.add_argument("--disable-extensions")
-#chrome_options.add_argument("--disable-gpu")
-#chrome_options.add_argument("--no-sandbox") # linux only
-chrome_options.add_argument("--headless")
-# chrome_options.headless = True # also works
-#driver = webdriver.Chrome(options=chrome_options)
-
-
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-
+#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), firefox_options=options)
 
 def unix():
     return sys.platform.startswith('linux') or sys.platform.startswith('darwin')
@@ -41,8 +27,8 @@ def unix():
 
 class Steps(unittest.TestCase):
     def is_unix(self):
-        driver.close()
-        driver.quit()
         return unix()
 
-
+    def stop_webdriver(self):
+        driver.close()
+        driver.quit()
