@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from ..framework.main import Steps
+from ..framework.main import *
 
 
 class Cases(Steps):
     def test_main(self):
-        #assert(self.is_unix() == True)
-        self.stop_webdriver()
+        driver = start_driver()
+        Steps.get_address(self, driver, "https://apparel-uk.local:9002/ucstorefront/en")
+        stop_driver(driver)
+

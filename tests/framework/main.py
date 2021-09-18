@@ -19,31 +19,39 @@ from selenium.webdriver.firefox.options import Options as OptionsFirefox
 from selenium.webdriver.opera.options import Options as OptionsOpera
 from msedge.selenium_tools import EdgeOptions as OptionsEdge
 
-browser = open(os.getcwd()+"/browser.txt").read()
 
-if browser == "Chrome":
-    options = OptionsChrome()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-elif browser == "Firefox":
-    options = OptionsFirefox()
-    options.add_argument("--headless")
-    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), firefox_options=options)
-elif browser == "Opera":
-    options = OptionsOpera()
-    options.add_argument("--headless")
-    driver = webdriver.Opera(executable_path=OperaDriverManager().install(), options=options)
-elif browser == "Edge":
-    options = OptionsEdge()
-    options.use_chromium = True
-    options.add_argument("headless")
-    options.add_argument("disable-gpu")
-    driver = webdriver.Opera(executable_path=EdgeChromiumDriverManager().install(), options=options)
-else:
-    # Chrome driver by default
-    options = OptionsChrome()
-    options.add_argument("--headless")
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+def start_driver():
+    browser = open(os.getcwd() + "/browser.txt").read()
+
+    if browser == "Chrome":
+        options = OptionsChrome()
+        options.add_argument("--headless")
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    elif browser == "Firefox":
+        options = OptionsFirefox()
+        options.add_argument("--headless")
+        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), firefox_options=options)
+    elif browser == "Opera":
+        options = OptionsOpera()
+        options.add_argument("--headless")
+        driver = webdriver.Opera(executable_path=OperaDriverManager().install(), options=options)
+    elif browser == "Edge":
+        options = OptionsEdge()
+        options.use_chromium = True
+        options.add_argument("headless")
+        options.add_argument("disable-gpu")
+        driver = webdriver.Opera(executable_path=EdgeChromiumDriverManager().install(), options=options)
+    else:
+        # Chrome driver by default
+        options = OptionsChrome()
+        options.add_argument("--headless")
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    return driver
+
+
+def stop_driver(driver_instance):
+    driver_instance.close()
+    driver_instance.quit()
 
 
 def unix():
@@ -51,9 +59,13 @@ def unix():
 
 
 class Steps(unittest.TestCase):
-    def is_unix(self):
-        return unix()
 
-    def stop_webdriver(self):
-        driver.close()
-        driver.quit()
+    def get_address(self, driver, address):
+        try:
+            driver.get(address)
+        except TimeoutException:
+            stop_driver(driver)
+            self.fail('Exception while trying to connect to ' + address)
+
+
+
