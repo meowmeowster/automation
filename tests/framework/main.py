@@ -32,6 +32,7 @@ def unix():
 class Steps(unittest.TestCase):
     def is_unix(self):
         driver.close()
+        driver.quit()
         return unix()
 
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from framework.main import Steps
+from tests.framework.main import Steps
 
 
 class Cases(Steps):
