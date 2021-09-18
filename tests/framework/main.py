@@ -12,14 +12,21 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as OptionsChrome
+from selenium.webdriver.firefox.options import Options as OptionsFirefox
 
-options = Options()
-#options.add_argument("--headless")
-options.headless = True
+browser = "Firefox"
 
-#driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), firefox_options=options)
+if browser == "Chrome":
+    options = OptionsChrome()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+elif browser == "Firefox":
+    options = OptionsFirefox()
+    options.add_argument("--headless")
+    driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), firefox_options=options)
+
+
 
 def unix():
     return sys.platform.startswith('linux') or sys.platform.startswith('darwin')
