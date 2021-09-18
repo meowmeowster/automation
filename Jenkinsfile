@@ -28,7 +28,7 @@ pipeline {
                     sh 'ls -l ./shared/'
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                         sh 'rm -rf ./shared/* '
-                        sh 'pytest -v ./tests/scenarios/ --rootdir=./tests/scenarios/ --alluredir ./shared/'
+                        sh 'pytest -v ./tests/scenarios/ --rootdir=./tests/scenarios/'
                     }
                     sh 'cd $HOME'
                     sh 'mkdir -p test-report'
