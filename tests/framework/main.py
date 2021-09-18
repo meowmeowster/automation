@@ -42,17 +42,20 @@ def start_driver():
     elif browser == "Opera":
         options = OptionsOpera()
         options.add_argument("--headless")
-        driver = webdriver.Opera(executable_path=OperaDriverManager().install(), options=options, desired_capabilities=desired_capabilities)
+        driver = webdriver.Opera(executable_path=OperaDriverManager().install(),
+                                 options=options, desired_capabilities=desired_capabilities)
     elif browser == "Edge":
         options = OptionsEdge()
         options.use_chromium = True
         options.add_argument("headless")
         options.add_argument("disable-gpu")
-        driver = webdriver.Opera(executable_path=EdgeChromiumDriverManager().install(), options=options, desired_capabilities=desired_capabilities)
+        driver = webdriver.Opera(executable_path=EdgeChromiumDriverManager().install(),
+                                 options=options, desired_capabilities=desired_capabilities)
     else:
         # Chrome driver by default
         options = OptionsChrome()
         options.add_argument("--headless")
+        options.add_argument('ignore-certificate-errors')
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver.maximize_window()
     return driver
