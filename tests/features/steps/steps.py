@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from behave import *
-from engine import *
 
 
 @Given('user opened {address}')
