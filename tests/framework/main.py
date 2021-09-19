@@ -146,3 +146,7 @@ class Steps(unittest.TestCase):
             element.send_keys(source)
         else:
             return None
+
+    def smart_read(self, driver, locator, context, data):
+        element = Steps.smart_search(self, driver, locator, context)
+        return data.lower().strip() in element.text.lower().strip()
