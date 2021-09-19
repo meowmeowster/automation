@@ -1,0 +1,22 @@
+https://github.com/meowmeowster/automation.git/
+
+BROWSER
+Chrome
+Firefox
+Opera
+Edge
+
+ls -la $JENKINS_HOME/workspace
+echo $BROWSER > $WORKSPACE/tests/browser.txt
+ls -la $WORKSPACE
+
+#!/bin/bash
+python3 -m venv team39
+source team39/bin/activate
+python3 --version
+pip install --upgrade pip
+pip install -r $WORKSPACE/requirements.txt
+cd $WORKSPACE/tests
+behave
+
+
