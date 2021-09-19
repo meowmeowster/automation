@@ -1,13 +1,3 @@
-PyAutoGUI~=0.9.53
-PyAutoIt~=0.6.5
-PyGetWindow~=0.0.8
-PyMsgBox~=1.0.8
-pyparsing~=2.4.7
-pyperclip~=1.8.0
-pyreadline~=2.1
-PyRect~=0.1.4
-PyScreeze~=0.1.26
-pyscreenshot~=2.2
 pytest~=6.2.5
 pytest-dependency~=0.5.1
 pytest-logger~=0.5.1
