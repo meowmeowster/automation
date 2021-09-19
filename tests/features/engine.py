@@ -21,29 +21,33 @@ class Engine(Browser):
             Browser.close()
             self.fail("Exception while trying to connect to " + address)
 
-    def smart_wait(self, visibility, length=3):
+    def smart_wait(self, visibility, length=3, is_negative=False):
         try:
             wait = WebDriverWait(Browser.driver, length)
             wait.until(visibility)
         except TimeoutException:
-            Browser.close()
-            self.fail("Timeout exception while looking for element")
+            if not is_negative:
+                Browser.close()
+                self.fail("Timeout exception while looking for element")
 
-    def smart_search(self, locator, content):
+    def smart_search(self, locator, content, is_negative=False):
         try:
             if locator == "class_name":
                 visibility = EC.visibility_of_element_located((By.CLASS_NAME, content))
-                Engine.smart_wait(self, visibility)
+                Engine.smart_wait(self, visibility, is_negative)
                 return Browser.driver.find_element_by_class_name(content)
             elif locator == "id":
                 visibility = EC.visibility_of_element_located((By.ID, content))
-                Engine.smart_wait(self, visibility)
+                Engine.smart_wait(self, visibility, is_negative)
                 return Browser.driver.find_element_by_id(content)
             else:
                 return None
         except Exception:
-            Browser.close()
-            self.fail("Exception on " + locator + " search of " + content)
+            if not is_negative:
+                Browser.close()
+                self.fail("Exception on " + locator + " search of " + content)
+            else:
+                pass
 
     def smart_action(self, locator, content, action, source=None):
         element = Engine.smart_search(self, locator, content)

@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
-@smoke
-
-#Background: Вход в браузер
-#  Given Пусть пользователь запустил браузер
 
 Feature: Smoke
-  @auth
+  @auth @smoke
   Scenario: Auth, positive
     Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
     Then user clicked on "class_name" called "liOffcanvas"
@@ -21,4 +17,4 @@ Feature: Smoke
     Then user typed "654321" into "id" called "j_password"
     Then user clicked on "class_name" called "btn-primary"
     Then user saw the text "Your username or password was incorrect." in "class_name" called "getAccAlert"
-
+    Then the "class_name" called "js-logged_in" is not present
