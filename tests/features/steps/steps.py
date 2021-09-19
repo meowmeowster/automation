@@ -20,6 +20,10 @@ def step_impl(context, locator, content, source):
 def step_impl(context, locator, content, data):
     context.steps.smart_read(locator, content, data)
 
+@Then('user saw the placeholder "{data}" in "{locator}" called "{content}"')
+def step_impl(context, locator, content, data):
+    context.steps.smart_read(locator, content, data, True)
+
 @Then('the "{locator}" called "{content}" is not present')
 def step_impl(context, locator, content):
     context.steps.smart_search(locator, content, True)

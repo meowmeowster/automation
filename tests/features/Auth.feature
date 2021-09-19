@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-Feature: Smoke
+Feature: Authorization for plain user
+
   @auth @smoke
   Scenario: Auth, positive
     Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
@@ -9,6 +10,7 @@ Feature: Smoke
     Then user typed "123456" into "id" called "j_password"
     Then user clicked on "class_name" called "btn-primary"
     Then user saw the text "Welcome test39" in "class_name" called "js-logged_in"
+
   @auth
   Scenario: Auth, negative
     Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
