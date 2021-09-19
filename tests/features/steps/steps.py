@@ -2,10 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from behave import *
-from behave.__main__ import main as behave_main
-import parse
-
-#use_step_matcher(parse)
 
 
 @Given(u"^Пусть пользователь открыл страницу [\'\"]{address}[\'\"]$")
