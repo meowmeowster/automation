@@ -20,6 +20,7 @@ def step_impl(context, locator, content, source):
 def step_impl(context, locator, content, data):
     context.steps.smart_read(locator, content,  data)
 
+
 #@step(u'run in parallel "{feature}" "{scenario}"')
 #def step_impl(context, feature, scenario):
 #    t = threading.Thread(
