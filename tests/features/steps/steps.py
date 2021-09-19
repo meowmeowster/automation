@@ -32,6 +32,10 @@ def step_impl(context, locator, content, data):
 def step_impl(context, locator, content):
     context.steps.smart_search(locator, content, True)
 
+@Then('the current url is "{url}"')
+def step_impl(context, url):
+    context.steps.current_url(url)
+
 #@step(u'run in parallel "{feature}" "{scenario}"')
 #def step_impl(context, feature, scenario):
 #    t = threading.Thread(

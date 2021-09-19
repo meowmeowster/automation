@@ -5,7 +5,6 @@ Feature: Shopping cart
   @cart @smoke
   Scenario: Open and close cart
     Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
-    Then user saw the text "0.00" in "id" called "js-mini-cart-price"
     Then user clicked on "class_name" called "nav-cart"
     Then user saw the text "Bag" in "class_name" called "headline-text"
     Then user saw the text "Continue Shopping" in "class_name" called "js-mini-cart-close-button"
@@ -15,7 +14,6 @@ Feature: Shopping cart
   @cart
   Scenario: Open and continue shopping
     Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
-    Then user saw the text "0.00" in "id" called "js-mini-cart-price"
     Then user clicked on "class_name" called "nav-cart"
     Then user saw the text "Bag" in "class_name" called "headline-text"
     Then user saw the text "Continue Shopping" in "class_name" called "js-mini-cart-close-button"

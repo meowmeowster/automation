@@ -62,3 +62,6 @@ class Engine(Browser):
             return source == ""
         else:
             return data.lower().strip() in source.lower().strip()
+
+    def current_url(self, url):
+        assert(url == Browser.driver.current_url)
