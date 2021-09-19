@@ -13,9 +13,9 @@ Feature: Header elements
   Scenario: Search
     Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
     Then there is no text in "id" called "js-site-search-input"
-    Then user clicked on "class_name" called "glyphicon-search"
+    Then user clicked on "class_name" called "js_search_button"
     Then the "class_name" called "results" is not present
     Then there is no text in "id" called "js-site-search-input"
     Then user typed "123" into "id" called "js-site-search-input"
-    Then user clicked on "class_name" called "glyphicon-search"
+    Then user clicked on "class_name" called "js_search_button"
     Then user saw the text "You searched for" in "class_name" called "results"
