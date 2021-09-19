@@ -18,7 +18,7 @@ class Engine(Browser):
         try:
             Browser.driver.get(address)
         except TimeoutException:
-            self.fail("Exception while trying to connect to " + address)
+            raise AssertionError("Exception while trying to connect to " + address)
 
     def smart_wait(self, visibility, length=3, is_negative=False):
         try:
@@ -26,7 +26,7 @@ class Engine(Browser):
             wait.until(visibility)
         except TimeoutException:
             if not is_negative:
-                self.fail("Timeout exception while looking for element")
+                raise AssertionError("Timeout exception while looking for element")
 
     def smart_search(self, locator, content, is_negative=False):
         try:
@@ -42,7 +42,7 @@ class Engine(Browser):
                 return None
         except Exception:
             if not is_negative:
-                self.fail("Exception on " + locator + " search of " + content)
+                raise AssertionError("Exception on " + locator + " search of " + content)
             else:
                 pass
 
