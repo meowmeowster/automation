@@ -29,24 +29,24 @@ class Engine(Browser):
             Browser.close()
             self.fail("Timeout exception while looking for element")
 
-    def smart_search(self, locator, context):
+    def smart_search(self, locator, content):
         try:
             if locator == "class_name":
-                visibility = EC.visibility_of_element_located((By.CLASS_NAME, context))
+                visibility = EC.visibility_of_element_located((By.CLASS_NAME, content))
                 Engine.smart_wait(self, visibility)
-                return Browser.driver.find_element_by_class_name(context)
+                return Browser.driver.find_element_by_class_name(content)
             elif locator == "id":
-                visibility = EC.visibility_of_element_located((By.ID, context))
+                visibility = EC.visibility_of_element_located((By.ID, content))
                 Engine.smart_wait(self, visibility)
-                return Browser.driver.find_element_by_id(context)
+                return Browser.driver.find_element_by_id(content)
             else:
                 return None
         except Exception:
             Browser.close()
-            self.fail("Exception on " + locator + " search of " + context)
+            self.fail("Exception on " + locator + " search of " + content)
 
-    def smart_action(self, locator, context, action, source=None):
-        element = Engine.smart_search(self, locator, context)
+    def smart_action(self, locator, content, action, source=None):
+        element = Engine.smart_search(self, locator, content)
         if action == "click":
             element.click()
         elif action == "type":
@@ -54,6 +54,6 @@ class Engine(Browser):
         else:
             return None
 
-    def smart_read(self, locator, context, data):
-        element = Engine.smart_search(self, locator, context)
+    def smart_read(self, locator, content, data):
+        element = Engine.smart_search(self, locator, content)
         return data.lower().strip() in element.text.lower().strip()
