@@ -58,7 +58,10 @@ class Engine(Browser):
         else:
             return None
 
-    def smart_read(self, locator, content, data, is_placeholder=False):
+    def smart_read(self, locator, content, data, is_placeholder=False, is_empty=False):
         element = Engine.smart_search(self, locator, content)
         source = element.text
-        return data.lower().strip() in source.lower().strip()
+        if is_empty:
+            return source == ""
+        else:
+            return data.lower().strip() in source.lower().strip()
