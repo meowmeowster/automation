@@ -18,72 +18,11 @@ from selenium.webdriver.chrome.options import Options as OptionsChrome
 from selenium.webdriver.firefox.options import Options as OptionsFirefox
 from selenium.webdriver.opera.options import Options as OptionsOpera
 from msedge.selenium_tools import EdgeOptions as OptionsEdge
+from gherkin.token_scanner import TokenScanner
+from gherkin.parser import Parser
 
 
-def start_driver():
-    browser = open(os.getcwd() + "/browser.txt").read()
 
-    desired_capabilities = {
-        "acceptInsecureCerts": True
-    }
-
-    if browser == "Chrome":
-        options = OptionsChrome()
-        options.add_argument("--headless")
-        options.add_argument("--start-maximized")
-        options.add_argument("--disable-extensions")
-        options.add_argument("--disable-infobars")
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument('ignore-certificate-errors')
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-    elif browser == "Firefox":
-        options = OptionsFirefox()
-        options.add_argument("--headless")
-        options.add_argument("--start-maximized")
-        options.add_argument("--disable-extensions")
-        options.add_argument("--disable-infobars")
-        options.add_argument('--window-size=1920,1080')
-        profile = webdriver.FirefoxProfile()
-        profile.accept_untrusted_certs = True
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(),
-                                   firefox_options=options, firefox_profile=profile)
-    elif browser == "Opera":
-        options = OptionsOpera()
-        options.add_argument("--headless")
-        options.add_argument("--start-maximized")
-        options.add_argument("--disable-extensions")
-        options.add_argument("--disable-infobars")
-        options.add_argument('--window-size=1920,1080')
-        driver = webdriver.Opera(executable_path=OperaDriverManager().install(),
-                                 options=options, desired_capabilities=desired_capabilities)
-    elif browser == "Edge":
-        options = OptionsEdge()
-        options.use_chromium = True
-        options.add_argument("headless")
-        options.add_argument("--start-maximized")
-        options.add_argument("--disable-extensions")
-        options.add_argument("--disable-infobars")
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument("disable-gpu")
-        driver = webdriver.Opera(executable_path=EdgeChromiumDriverManager().install(),
-                                 options=options, desired_capabilities=desired_capabilities)
-    else:
-        # Chrome driver by default
-        options = OptionsChrome()
-        options.add_argument("--headless")
-        options.add_argument("--start-maximized")
-        options.add_argument("--disable-extensions")
-        options.add_argument("--disable-infobars")
-        options.add_argument('--window-size=1920,1080')
-        options.add_argument('ignore-certificate-errors')
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-    driver.maximize_window()
-    return driver
-
-
-def stop_driver(driver_instance):
-    driver_instance.close()
-    driver_instance.quit()
 
 
 def unix():
@@ -91,35 +30,19 @@ def unix():
 
 
 class Steps(unittest.TestCase):
-
     def get_address(self, driver, address):
         try:
             driver.get(address)
         except TimeoutException:
-            stop_driver(driver)
+            self.stop_driver(driver)
             self.fail("Exception while trying to connect to " + address)
-
-    def login(self, driver, login, password):
-        try:
-            element = driver.find_elements_by_class_name('1').__getitem__(0)
-            element.send_keys(login)
-            element = driver.find_elements_by_class_name('2').__getitem__(1)
-            element.send_keys(password)
-
-            wait = WebDriverWait(driver, 5)
-            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, '3')))
-            element = driver.find_element_by_class_name('4')
-            element.click()
-        except TimeoutException:
-            stop_driver(driver)
-            self.fail("Timeout exception while logging in")
 
     def smart_wait(self, driver, visibility, length=3):
         try:
             wait = WebDriverWait(driver, length)
             wait.until(visibility)
         except TimeoutException:
-            stop_driver(driver)
+            self.stop_driver(driver)
             self.fail("Timeout exception while looking for element")
 
     def smart_search(self, driver, locator, context):
@@ -135,7 +58,7 @@ class Steps(unittest.TestCase):
             else:
                 return None
         except Exception:
-            stop_driver(driver)
+            self.stop_driver(driver)
             self.fail("Exception on " + locator + " search of " + context)
 
     def smart_action(self, driver, locator, context, action, source=None):
@@ -150,3 +73,67 @@ class Steps(unittest.TestCase):
     def smart_read(self, driver, locator, context, data):
         element = Steps.smart_search(self, driver, locator, context)
         return data.lower().strip() in element.text.lower().strip()
+
+    def start_driver(self):
+        browser = open(os.getcwd() + "/browser.txt").read()
+
+        desired_capabilities = {
+            "acceptInsecureCerts": True
+        }
+
+        if browser == "Chrome":
+            options = OptionsChrome()
+            options.add_argument("--headless")
+            options.add_argument("--start-maximized")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-infobars")
+            options.add_argument('--window-size=1920,1080')
+            options.add_argument('ignore-certificate-errors')
+            driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+        elif browser == "Firefox":
+            options = OptionsFirefox()
+            options.add_argument("--headless")
+            options.add_argument("--start-maximized")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-infobars")
+            options.add_argument('--window-size=1920,1080')
+            profile = webdriver.FirefoxProfile()
+            profile.accept_untrusted_certs = True
+            driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(),
+                                       firefox_options=options, firefox_profile=profile)
+        elif browser == "Opera":
+            options = OptionsOpera()
+            options.add_argument("--headless")
+            options.add_argument("--start-maximized")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-infobars")
+            options.add_argument('--window-size=1920,1080')
+            driver = webdriver.Opera(executable_path=OperaDriverManager().install(),
+                                     options=options, desired_capabilities=desired_capabilities)
+        elif browser == "Edge":
+            options = OptionsEdge()
+            options.use_chromium = True
+            options.add_argument("headless")
+            options.add_argument("--start-maximized")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-infobars")
+            options.add_argument('--window-size=1920,1080')
+            options.add_argument("disable-gpu")
+            driver = webdriver.Opera(executable_path=EdgeChromiumDriverManager().install(),
+                                     options=options, desired_capabilities=desired_capabilities)
+        else:
+            # Chrome driver by default
+            options = OptionsChrome()
+            options.add_argument("--headless")
+            options.add_argument("--start-maximized")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-infobars")
+            options.add_argument('--window-size=1920,1080')
+            options.add_argument('ignore-certificate-errors')
+            driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+        driver.maximize_window()
+        return driver
+
+    def stop_driver(self, driver_instance):
+        driver_instance.close()
+        driver_instance.quit()
