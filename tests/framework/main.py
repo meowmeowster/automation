@@ -30,11 +30,19 @@ def start_driver():
     if browser == "Chrome":
         options = OptionsChrome()
         options.add_argument("--headless")
+        options.add_argument("--start-maximized")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-infobars")
+        options.add_argument('--window-size=1920,1080')
         options.add_argument('ignore-certificate-errors')
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     elif browser == "Firefox":
         options = OptionsFirefox()
         options.add_argument("--headless")
+        options.add_argument("--start-maximized")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-infobars")
+        options.add_argument('--window-size=1920,1080')
         profile = webdriver.FirefoxProfile()
         profile.accept_untrusted_certs = True
         driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(),
@@ -42,12 +50,20 @@ def start_driver():
     elif browser == "Opera":
         options = OptionsOpera()
         options.add_argument("--headless")
+        options.add_argument("--start-maximized")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-infobars")
+        options.add_argument('--window-size=1920,1080')
         driver = webdriver.Opera(executable_path=OperaDriverManager().install(),
                                  options=options, desired_capabilities=desired_capabilities)
     elif browser == "Edge":
         options = OptionsEdge()
         options.use_chromium = True
         options.add_argument("headless")
+        options.add_argument("--start-maximized")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-infobars")
+        options.add_argument('--window-size=1920,1080')
         options.add_argument("disable-gpu")
         driver = webdriver.Opera(executable_path=EdgeChromiumDriverManager().install(),
                                  options=options, desired_capabilities=desired_capabilities)
@@ -55,6 +71,10 @@ def start_driver():
         # Chrome driver by default
         options = OptionsChrome()
         options.add_argument("--headless")
+        options.add_argument("--start-maximized")
+        options.add_argument("--disable-extensions")
+        options.add_argument("--disable-infobars")
+        options.add_argument('--window-size=1920,1080')
         options.add_argument('ignore-certificate-errors')
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver.maximize_window()
