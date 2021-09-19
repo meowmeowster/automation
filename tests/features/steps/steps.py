@@ -4,11 +4,13 @@
 from behave import *
 
 
-@Given('user opened {address}')
+@Given('user opened [\'\"]{address}[\'\"]')
 def step_impl(context, address):
     context.steps.get_address(address)
 
-
+@Then('and user performed [\'\"]{action}[\'\"] action (with content [\'\"]{source}[\'\"])? on [\'\"]{element}[\'\"] called [\'\"]{value}[\'\"]')
+def step_impl(context, action, source, element, value):
+    context.steps.smart_action(element, source, action, value)
 
 
 #@step(u'run in parallel "{feature}" "{scenario}"')
