@@ -3,6 +3,9 @@
 
 from behave import *
 
+#@Given(u"^Пусть пользователь запустил браузер$")
+#def step_impl(context):
+#    driver = context.start_driver()
 
 @Given(u"^Пусть пользователь открыл страницу [\'\"]{address}[\'\"]$")
 def step_impl(context, address):

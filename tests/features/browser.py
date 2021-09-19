@@ -1,15 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import unittest
 import os
-import sys
-import requests
 from selenium import webdriver
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.opera import OperaDriverManager
@@ -18,11 +11,10 @@ from selenium.webdriver.chrome.options import Options as OptionsChrome
 from selenium.webdriver.firefox.options import Options as OptionsFirefox
 from selenium.webdriver.opera.options import Options as OptionsOpera
 from msedge.selenium_tools import EdgeOptions as OptionsEdge
-from gherkin.token_scanner import TokenScanner
-from gherkin.parser import Parser
 
 
-def start_driver(self):
+class Browser(object):
+
     browser = open(os.getcwd() + "/browser.txt").read()
 
     desired_capabilities = {
@@ -80,61 +72,7 @@ def start_driver(self):
         options.add_argument('ignore-certificate-errors')
         driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver.maximize_window()
-    return driver
 
-
-def stop_driver(self, driver_instance):
-    driver_instance.close()
-    driver_instance.quit()
-
-
-def unix():
-    return sys.platform.startswith("linux") or sys.platform.startswith("darwin")
-
-
-class Steps(unittest.TestCase):
-    def get_address(self, driver, address):
-        try:
-            driver.get(address)
-        except TimeoutException:
-            stop_driver(driver)
-            self.fail("Exception while trying to connect to " + address)
-
-    def smart_wait(self, driver, visibility, length=3):
-        try:
-            wait = WebDriverWait(driver, length)
-            wait.until(visibility)
-        except TimeoutException:
-            stop_driver(driver)
-            self.fail("Timeout exception while looking for element")
-
-    def smart_search(self, driver, locator, context):
-        try:
-            if locator == "class_name":
-                visibility = EC.visibility_of_element_located((By.CLASS_NAME, context))
-                Steps.smart_wait(self, driver, visibility)
-                return driver.find_element_by_class_name(context)
-            elif locator == "id":
-                visibility = EC.visibility_of_element_located((By.ID, context))
-                Steps.smart_wait(self, driver, visibility)
-                return driver.find_element_by_id(context)
-            else:
-                return None
-        except Exception:
-            stop_driver(driver)
-            self.fail("Exception on " + locator + " search of " + context)
-
-    def smart_action(self, driver, locator, context, action, source=None):
-        element = Steps.smart_search(self, driver, locator, context)
-        if action == "click":
-            element.click()
-        elif action == "type":
-            element.send_keys(source)
-        else:
-            return None
-
-    def smart_read(self, driver, locator, context, data):
-        element = Steps.smart_search(self, driver, locator, context)
-        return data.lower().strip() in element.text.lower().strip()
-
-
+    def close(context):
+        context.driver.close()
+        context.driver.quit()

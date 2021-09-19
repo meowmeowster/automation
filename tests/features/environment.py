@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from framework.main import *
+from engine import Engine
+from browser import Browser
 
 
 def before_all(context):
-
-    context.steps = Steps()
-    context.steps.start_driver()
+    context.browser = Browser()
+    context.steps = Engine()
 
 
 def after_all(context):
-    context.steps.stop_driver()
+    context.browser.close()
