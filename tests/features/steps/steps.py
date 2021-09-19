@@ -7,7 +7,7 @@ from behave import *
 #def step_impl(context):
 #    driver = context.start_driver()
 
-@Given(u"^Пусть пользователь открыл страницу [\'\"]{address}[\'\"]$")
+@Given(u"^user opened [\'\"]{address}[\'\"]$")
 def step_impl(context, address):
     context.get_address(address)
 

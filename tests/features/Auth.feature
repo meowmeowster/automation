@@ -4,7 +4,7 @@
 #Background: Вход в браузер
 #  Given Пусть пользователь запустил браузер
 
-Feature: Смоук-тесты
+Feature: Smoke
   @auth
-  Scenario: Смоук-тест авторизации
-    Given Пусть пользователь открыл страницу "https://apparel-uk.local:9002/ucstorefront/en"
+  Scenario: Auth smoke
+    Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
