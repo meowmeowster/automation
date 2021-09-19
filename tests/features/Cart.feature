@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+
+Feature: Shopping cart
+
+  @cart @smoke
+  Scenario: Open and close cart
+    Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
+    Then user saw the text "Items" in "id" called "items-desktop"
+    Then user clicked on "class_name" called "nav-cart"
+    Then user saw the text "Check Out" in "class_name" called "btn-block"
+    Then user saw the text "Continue Shopping" in "class_name" called "js-mini-cart-close-button"
+    Then user clicked on "id" called "cboxClose"
+    Then the "class_name" called "js-mini-cart-close-button" is not present
