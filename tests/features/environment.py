@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from tests.framework.main import *
+from framework.main import *
 
 
 def before_all(context):
