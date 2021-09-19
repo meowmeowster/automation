@@ -16,6 +16,10 @@ def step_impl(context, locator, content):
 def step_impl(context, locator, content, source):
     context.steps.smart_action(locator, content, "type", source)
 
+@Then('user saw the text "{data}" in "{locator}" called "{content}"')
+def step_impl(context, locator, content, data):
+    context.steps.smart_read(locator, content,  data)
+
 #@step(u'run in parallel "{feature}" "{scenario}"')
 #def step_impl(context, feature, scenario):
 #    t = threading.Thread(

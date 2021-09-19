@@ -10,3 +10,6 @@ Feature: Smoke
     Given user opened "https://apparel-uk.local:9002/ucstorefront/en"
     Then user clicked on "class_name" called "liOffcanvas"
     Then user typed "test39@test.com" into "id" called "j_username"
+    Then user typed "123456" into "id" called "j_password"
+    Then user clicked on "class_name" called "btn-primary"
+    Then user saw the text "Welcome test39" in "class_name" called "js-logged_in"
