@@ -7,7 +7,7 @@ from engine import *
 
 @Given('user opened {address}')
 def step_impl(context, address):
-    context.Engine.get_address(address)
+    context.steps.get_address(address)
 
 
 
