@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 
 from behave import *
+from engine import *
 
 #@Given(u"^Пусть пользователь запустил браузер$")
 #def step_impl(context):
 #    driver = context.start_driver()
 
+
 @Given(u"^user opened [\'\"]{address}[\'\"]$")
 def step_impl(context, address):
-    context.get_address(address)
+    context.Engine.get_address(address)
 
 
 
